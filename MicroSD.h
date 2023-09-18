@@ -10,7 +10,7 @@ class MicroSD  {
   // VARIABLES
   public:
     uint8_t contador = 0;      /* */
-    String filename = "/TestMicroSD.txt";   /* Nombre de archivo que incluye "/" que indica la ubicación en raíz */
+    String filename = "";   /* Nombre de archivo que incluye "/" que indica la ubicación en raíz */
   // MÉTODOS
   public:
    void MicroSD_init ( void );

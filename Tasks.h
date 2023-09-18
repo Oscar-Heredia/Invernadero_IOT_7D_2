@@ -9,8 +9,8 @@
 #define TIEMPO2 2000                 // Constante para indicar 2 segundos (2000 ms).
 #define TIEMPO3 3000                 // Constante para indicar 3 segundos (3000 ms).
 #define TIEMPO_RTC 1000              // Constante para indicar el tiempode muestra de reloj.
-
-
+#define TIEMPO_LCD 1000
+#define TIEMPO_SD 5000
 class millis_tasks {
 
   public:
@@ -18,6 +18,8 @@ class millis_tasks {
              tiempo_anterior2 = 0,   // Contador de tiempo que tendrá múltiplos de TIEMPO2.
              tiempo_anterior3 = 0,   // Contador de tiempo que tendrá múltiplos de TIEMPO3.
              tiempo_anterior_rtc = 0, // C0¿ontador 
+             tiempo_anterior_lcd = 0,
+             tiempo_anterior_sd = 0,
              tiempo_actual = 0;      // Contador de tiempo que tendrá múltiplos de TIEMPO.
     
   public:
@@ -26,6 +28,8 @@ class millis_tasks {
     void tarea2 ( void );            // Función que ejecuta una acción cada dos segundos.
     void tarea3 ( void );            // Función que ejecuta una acción cada tres segundos.
     void tarea_rtc(void);
+    void tarea_lcd(void);
+    void tarea_sd(void);
     void actualizar_tareas (void );  // Función que actualiza el conteo obtenido de la función "millis()".
  
 };
@@ -86,11 +90,11 @@ void millis_tasks :: tarea2 ( void ) {
 
 
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~ tarea2 - Función que se ejecuta cada TIEMPO2 ( 2 SEGUNDOS ) ~~~~~~~~~~~~~~~~~~~~~~~~ */
+/*~~~~~~~~~~~~~~~~~~~~~~~~ tareartc - Función que se ejecuta ( 2 SEGUNDOS ) ~~~~~~~~~~~~~~~~~~~~~~~~ */
 void millis_tasks :: tarea_rtc ( void ) {
   if ( ( tiempo_actual - tiempo_anterior_rtc ) >= TIEMPO_RTC ){
 
-     Serial.println ( "Ejecutando la tarea del RTC  " );
+     Serial.println ( "2.- Ejecutando tarea 2" );
      RTC.get_time();
      RTC.show_time();
      tiempo_anterior_rtc = tiempo_actual;
@@ -99,7 +103,41 @@ void millis_tasks :: tarea_rtc ( void ) {
  
 }
 
+/*~~~~~~~~~~~~~~~~~~~~~~~~ tarealcd - Función que se ejecuta ( 2 SEGUNDOS ) ~~~~~~~~~~~~~~~~~~~~~~~~ */
+void millis_tasks :: tarea_lcd ( void ) {
+  if ( ( tiempo_actual - tiempo_anterior_lcd ) >= TIEMPO_LCD ){
 
+     RTC.get_time( );
+     //RTC.show_time();
+     RTC.format_time( );
+     RTC.format_date( );
+
+     //ACT.printfilan("Holis",0);
+     //ACT.printfilan("Pispiote",1);
+     
+
+     ACT.printfilan(RTC.fecha,0);
+     ACT.printfilan(RTC.tiempo,1);
+
+     tiempo_anterior_lcd = tiempo_actual;
+
+
+  }
+ 
+}
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~ tareacd - Función que se ejecuta ( 2 SEGUNDOS ) ~~~~~~~~~~~~~~~~~~~~~~~~ */
+void millis_tasks :: tarea_sd ( void ) {
+  if ( ( tiempo_actual - tiempo_anterior_sd ) >= TIEMPO_SD ){
+
+     RTC.get_time();
+     RTC.show_time();
+     tiempo_anterior_sd = tiempo_actual;
+
+  }
+ 
+}
 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~ tarea3 - Función que se ejecuta cada TIEMPO3 ( 3 SEGUNDOS ) ~~~~~~~~~~~~~~~~~~~~~~~~ */

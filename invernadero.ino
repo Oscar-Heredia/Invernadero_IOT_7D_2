@@ -1,13 +1,18 @@
+#include "Actuadores.h"
+actuadores ACT;
+#include "MicroSD.h"
+MicroSD MSD;
 #include "DHT11.h"
 dht11 dt;
 #include "LM393.h"
 lm393 lm;
 #include "LUZLM393.h"
 l_lm393 llm;
-#include "RTC.h"
+#include "RTC.h"     /* Librería para controlar el RTC */
 DS1307_RTC RTC;
 #include "Tasks.h"   /* Librería propia para controlar las tareas. */
 millis_tasks tsk;
+
 
 
 void setup(void)
